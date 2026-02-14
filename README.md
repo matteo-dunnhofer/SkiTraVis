@@ -9,7 +9,8 @@ Official code for SkiTraVis — software for ski trajectory visualization and an
 
 Demo of the capabilities of SkiTraVis are available in this video:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JPQ6EeOaon0?si=e6-qBGYZ2p67AzZu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/JPQ6EeOaon0/0.jpg)](https://www.youtube.com/watch?v=JPQ6EeOaon0)
+
 
 ## Usage
 
@@ -71,6 +72,7 @@ If you find this work useful please cite
   pages={5188--5198},
   year={2023}
 }
+```
 
 ## Contributions
 
