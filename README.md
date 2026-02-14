@@ -1,4 +1,4 @@
-# [SkiTraVis](https://openaccess.thecvf.com/content/CVPR2023W/CVSports/papers/Dunnhofer_Visualizing_Skiers_Trajectories_in_Monocular_Videos_CVPRW_2023_paper.pdf)
+# [SkiTraVis - Visualizing Skiers' Trajectories in Monocular Videos](https://openaccess.thecvf.com/content/CVPR2023W/CVSports/papers/Dunnhofer_Visualizing_Skiers_Trajectories_in_Monocular_Videos_CVPRW_2023_paper.pdf)
 
 Official code for SkiTraVis — software for ski trajectory visualization and analysis from video sequences.
 
