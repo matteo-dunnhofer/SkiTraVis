@@ -26,6 +26,8 @@ conda env create -f skitravis.yml
 ```
 Code tested on Ubuntu 22.04+, Python 3.8+, PyTorch 1.7+ (CUDA).
 
+Download the YOLOv4 and STARK checkpoints trained for skier detection and tracking (on the [SkiTB dataset](https://machinelearning.uniud.it/datasets/skitb/)) from [here](https://uniudamce-my.sharepoint.com/:f:/g/personal/matteo_dunnhofer_uniud_it/IgDsv7fNGvnGSohhyfldcRxAAUHXbBXOtSW-oS9qTnKTJsU?e=vznDRf) and put them in the ```checkpoints``` folder.
+ 
 
 To run SkiTraVis use the run_skitravis.py script.
 
