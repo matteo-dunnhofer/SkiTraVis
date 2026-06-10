@@ -19,7 +19,7 @@ class STARK_ST(BaseTracker):
         network = build_starkst(params.cfg)
         network.load_state_dict(torch.load(self.params.checkpoint, map_location='cpu')['net'], strict=True)
         self.cfg = params.cfg
-        self.network = network.cuda()
+        self.network = network.to(os.environ.get('SKITRAVIS_DEVICE', 'cpu'))
         self.network.eval()
         self.preprocessor = Preprocessor()
         self.state = None
