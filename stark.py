@@ -14,12 +14,15 @@ import cv2
 
 class STARK(object):
 
-    def __init__(self, ckpt_path=None):
+    def __init__(self, ckpt_path=None, device=None):
         tracker_info = Stark('stark_st', 'baseline_SkiTD_JP-FS-AL', "otb", None)
         params = tracker_info.get_parameters()
         params.visualization = False
         params.debug = False
-        params.checkpoint = ckpt_path 
+        params.checkpoint = ckpt_path
+        if device is None:
+            device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        params.device = str(device)
         self.stark = tracker_info.create_tracker(params)
         #self.stark.params.search_factor = 2.5
 

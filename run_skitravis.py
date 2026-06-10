@@ -38,7 +38,10 @@ from stark import STARK
 from dettrack import DetTrack
 from superglue import SuperGlue
 import pydegensac
-from loftr import LOFTR
+try:
+    from loftr import LOFTR
+except ImportError:
+    LOFTR = None  # loftr.py is not shipped in the public repo; use the default superglue matcher
 
 import matplotlib.pyplot as plt
 
@@ -130,7 +133,7 @@ def run(
     device = select_device(device)
 
     yolo = YOLOv5(detector_weights, device)
-    stark = STARK(tracker_weights)
+    stark = STARK(tracker_weights, device=device)
 
     dettrack = DetTrack(yolo, stark, verbose=True)
     
@@ -241,9 +244,13 @@ def run(
             target_bbox = scale_boxes(im.shape[:2], np.expand_dims(target_bbox, 0), im0s.shape).round()[0]
            
 
-        x1_p = target_bbox[0] - 0.1 * (target_bbox[2] - target_bbox[0])
-        y1_p = target_bbox[1] - 0.1 * (target_bbox[3] - target_bbox[1])
-        kpt_filtering_mask = build_kpt_filter_mask_from_boxes([[x1_p, y1_p, target_bbox[2] + 0.1 * (target_bbox[2] - target_bbox[0]) - x1_p, target_bbox[3] + 0.1 * (target_bbox[3] - target_bbox[1]) - y1_p]], mask=np.copy(static_kpt_filtering_mask))
+        if tracking:
+            x1_p = target_bbox[0] - 0.1 * (target_bbox[2] - target_bbox[0])
+            y1_p = target_bbox[1] - 0.1 * (target_bbox[3] - target_bbox[1])
+            kpt_filtering_mask = build_kpt_filter_mask_from_boxes([[x1_p, y1_p, target_bbox[2] + 0.1 * (target_bbox[2] - target_bbox[0]) - x1_p, target_bbox[3] + 0.1 * (target_bbox[3] - target_bbox[1]) - y1_p]], mask=np.copy(static_kpt_filtering_mask))
+        else:
+            # no target yet (e.g. detector has not found the skier) - exclude nothing extra
+            kpt_filtering_mask = np.copy(static_kpt_filtering_mask)
         
         if f_idx == 0:
             matcher.set_prev_frame(im0s)
@@ -387,8 +394,11 @@ def run(
                 vid_writer = cv2.VideoWriter(save_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (w, h))
             vid_writer.write(im0)
 
-        
+
         f_idx += 1
+
+    if isinstance(vid_writer, cv2.VideoWriter):
+        vid_writer.release()  # finalize the output mp4
 
 
 def parse_opt():

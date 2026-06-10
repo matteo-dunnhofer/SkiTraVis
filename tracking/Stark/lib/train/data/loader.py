@@ -3,7 +3,7 @@ import torch.utils.data.dataloader
 import importlib
 import collections
 
-from torch._six import string_classes#, int_classes
+string_classes = str  # torch._six was removed in PyTorch >= 1.13
 from lib.utils import TensorDict, TensorList
 
 int_classes = int

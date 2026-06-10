@@ -29,6 +29,22 @@ Code tested on Ubuntu 22.04+, Python 3.8+, PyTorch 1.7+ (CUDA).
 Download the YOLOv4 and STARK checkpoints trained for skier detection and tracking (on the [SkiTB dataset](https://machinelearning.uniud.it/datasets/skitb/)) from [here](https://uniudamce-my.sharepoint.com/:f:/g/personal/matteo_dunnhofer_uniud_it/IgDsv7fNGvnGSohhyfldcRxAAUHXbBXOtSW-oS9qTnKTJsU?e=vznDRf) and put them in the ```checkpoints``` folder.
  
 
+### Installation without conda (CUDA, CPU, or Apple Silicon)
+
+Alternatively, install the requirements into a plain virtual environment (works on Linux, macOS and Windows):
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+git clone https://github.com/magicleap/SuperGluePretrainedNetwork.git
+```
+
+Select the computation device with `--device`: a CUDA index (e.g. `--device 0`), `--device cpu`, or `--device mps` on Apple Silicon.
+
+Notes:
+- With PyTorch >= 2.6 set `TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1` when running, so the YOLOv5/STARK/SuperGlue checkpoints (pickled with older PyTorch) can be loaded.
+- Memory scales with input resolution: the frame-correspondence stage is run on full frames, and 4K input can exhaust memory on 16 GB machines. 720p-1080p input is recommended (the published evaluation used 720p).
+
 To run SkiTraVis use the run_skitravis.py script.
 
 - Specify input:
