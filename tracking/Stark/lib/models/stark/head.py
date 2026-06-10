@@ -1,7 +1,5 @@
 import torch.nn as nn
-import os
 import torch
-_DEV = os.environ.get('SKITRAVIS_DEVICE', 'cpu')
 import torch.nn.functional as F
 from lib.models.stark.backbone import FrozenBatchNorm2d
 from lib.models.stark.repvgg import RepVGGBlock
@@ -50,10 +48,10 @@ class Corner_Predictor(nn.Module):
         with torch.no_grad():
             self.indice = torch.arange(0, self.feat_sz).view(-1, 1) * self.stride
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
+            self.register_buffer('coord_x', self.indice.repeat((self.feat_sz, 1))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
+            self.register_buffer('coord_y', self.indice.repeat((1, self.feat_sz))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """
@@ -117,10 +115,10 @@ class Corner_Predictor_Lite(nn.Module):
         with torch.no_grad():
             self.indice = (torch.arange(0, self.feat_sz).view(-1, 1) + 0.5) * self.stride  # here we can add a 0.5
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
+            self.register_buffer('coord_x', self.indice.repeat((self.feat_sz, 1))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
+            self.register_buffer('coord_y', self.indice.repeat((1, self.feat_sz))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """
@@ -173,10 +171,10 @@ class Corner_Predictor_Lite_Rep(nn.Module):
         with torch.no_grad():
             self.indice = (torch.arange(0, self.feat_sz).view(-1, 1) + 0.5) * self.stride  # here we can add a 0.5
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
+            self.register_buffer('coord_x', self.indice.repeat((self.feat_sz, 1))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
+            self.register_buffer('coord_y', self.indice.repeat((1, self.feat_sz))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """
@@ -232,10 +230,10 @@ class Corner_Predictor_Lite_Rep_v2(nn.Module):
         with torch.no_grad():
             self.indice = (torch.arange(0, self.feat_sz).view(-1, 1) + 0.5) * self.stride  # here we can add a 0.5
             # generate mesh-grid
-            self.coord_x = self.indice.repeat((self.feat_sz, 1)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
-            self.coord_y = self.indice.repeat((1, self.feat_sz)) \
-                .view((self.feat_sz * self.feat_sz,)).float().to(_DEV)
+            self.register_buffer('coord_x', self.indice.repeat((self.feat_sz, 1))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
+            self.register_buffer('coord_y', self.indice.repeat((1, self.feat_sz))
+                .view((self.feat_sz * self.feat_sz,)).float(), persistent=False)
 
     def forward(self, x, return_dist=False, softmax=True):
         """ Forward pass with input x. """

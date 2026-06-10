@@ -133,7 +133,7 @@ def run(
     device = select_device(device)
 
     yolo = YOLOv5(detector_weights, device)
-    stark = STARK(tracker_weights)
+    stark = STARK(tracker_weights, device=device)
 
     dettrack = DetTrack(yolo, stark, verbose=True)
     
