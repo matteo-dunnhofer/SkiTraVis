@@ -1,0 +1,25 @@
+# SkiTraVis requirements (CUDA, CPU, and Apple Silicon / MPS)
+# Tested with Python 3.11 and PyTorch 2.x; see also skitravis.yml for the
+# original Linux + CUDA conda environment.
+torch>=2.0
+torchvision
+numpy<2
+opencv-python
+kornia
+timm
+yacs
+easydict
+scipy
+pandas
+matplotlib
+seaborn
+pyyaml
+tqdm
+psutil
+requests
+pillow
+pydegensac
+ipython
+tensorboard
+jpeg4py
+lmdb
