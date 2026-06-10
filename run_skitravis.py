@@ -38,7 +38,10 @@ from stark import STARK
 from dettrack import DetTrack
 from superglue import SuperGlue
 import pydegensac
-from loftr import LOFTR
+try:
+    from loftr import LOFTR
+except ImportError:
+    LOFTR = None  # loftr.py is not shipped in the public repo; use the default superglue matcher
 
 import matplotlib.pyplot as plt
 
